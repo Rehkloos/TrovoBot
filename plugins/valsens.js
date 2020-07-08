@@ -1,0 +1,1 @@
+console.log('loaded valsens'); module.exports = {     name: 'valsens',     description: '',     allowedRoles: ['EVERYONE'],     execute(message, args, user, bot) {         bot.sendMessage('Valorant: 400dpi - 0.69/1 ADS');     }, }; 

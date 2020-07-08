@@ -1,0 +1,1 @@
+console.log('loaded yokai'); module.exports = {     name: 'yokai',     description: '',     allowedRoles: ['EVERYONE'],     execute(message, args, user, bot) {         bot.sendMessage('Yokai is a professional esports org for both content and competitive play - socials: Twitter: https://twitter.com/yokaigg');     }, }; 

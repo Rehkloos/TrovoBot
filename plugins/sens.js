@@ -1,0 +1,1 @@
+console.log('loaded sens'); module.exports = {     name: 'sens',     description: '',     allowedRoles: ['EVERYONE'],     execute(message, args, user, bot) {         bot.sendMessage('!valsens');     }, }; 

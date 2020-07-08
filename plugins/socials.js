@@ -1,0 +1,1 @@
+console.log('loaded socials'); module.exports = {     name: 'socials',     description: '',     allowedRoles: ['EVERYONE'],     execute(message, args, user, bot) {         bot.sendMessage('all my socials are on my official website! https://rehkloos.com');     }, }; 
