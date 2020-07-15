@@ -1,14 +1,20 @@
 const https = require('https');
-const config = require('./stats.Settings.json');
-const urlEncodedName = encodeURIComponent(config.playerName)
-const userUrl = `https://api.tracker.gg/api/v2/warzone/standard/profile/${config.platform}/${urlEncodedName}`
+												
+															
+																											 
 module.exports = {
 	name: 'warzone-stats',
   description: 'Replies with warzone stat information',
   credits: "Created by Teabagz check out my channel https://trovo.live/Bagz",
   permissions: [],
 	execute(message, args, user, bot, event, plugins) {
-    https.get(userUrl, (resp) => {
+    if(!args[0]) {
+        bot.sendMessage("Example Usage: = " + `!warzone-stats Nickname#TAG`);
+    }
+    else if (args[0]) {
+      const urlEncodedName = encodeURIComponent(args[0])
+      const userUrl = `https://api.tracker.gg/api/v2/warzone/standard/profile/battlenet/${urlEncodedName}`
+          https.get(userUrl, (resp) => {
     let data = '';
 
     // A chunk of data has been recieved.
@@ -17,6 +23,7 @@ module.exports = {
     })
     resp.on('end', () => {
       const obj = JSON.parse(data);
+      if(obj.data){				   
       const brStats = obj.data.segments[1];
       const kills = brStats.stats.kills.displayValue;
       const deaths = brStats.stats.deaths.displayValue;
@@ -27,10 +34,12 @@ module.exports = {
       const avgLife = brStats.stats.averageLife.displayValue;
       bot.sendMessage(`${user} here are my warzone stats\rKills: ${kills} Deaths: ${deaths}\rKDR: ${kdr}\r
       Wins: ${wins}\rTop 10 placements: ${top10}\rand on average I live for ${avgLife}`);
-    });
+      }
+      else  { const err = obj.errors[0]; const errMsg = err.message; if (errMsg) { bot.sendMessage("We could not find the player "+ `${args[0]}` +". Make sure you have our Overwolf App!") } }
+      });																																															   
   }).on("error", (err) => {
     console.log("Error: " + err.message);
   });
-
+	}
 	},
 };
